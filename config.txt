@@ -1,0 +1,30 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+cd fastapi-env 
+cd .\Scripts\ 
+.\activate 
+
+
+products = [
+    {'name': 'laptop', 'price': 800, 'quantity': 4},
+    {'name': 'mouse', 'price': 40, 'quantity': 10},
+    {'name': 'monitor', 'price': 400, 'quantity': 3}
+] 
+
+  cursor.execute ("UPDATE users SET NOMBRE = %s, CC = %s, EMAIL = %s, WHERE id = %s",
+    (data['NOMBRE'],data['CC'],data['CORREO'],id))
+
+
+ try:    
+            cursor = mysql.connection.cursor()       
+            nombre = request.json['nombre']
+            apellido = request.json['apellido']   
+            sex = request.json['sex']    
+            role = request.json['role']
+            email = request.json['email']  
+            password = request.json['password']
+            cursor.execute("INSERT INTO users(name,last_name,sex,role,email,password) VALUES(%s,%s,%s,%s,%s,%s)",(nombre,apellido,sex,role,email,password)) 
+            mysql.connection.commit()
+            cursor.close()
+            return jsonify({"informacion":"empleado registrado"})
+    except Exception as error:
+        return jsonify({"error": "Ocurrió un error al registrar el usuario", "details": str(error)}), 500
